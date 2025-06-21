@@ -29,7 +29,7 @@ export interface AssessmentResult {
   level: number;
   icon: string;
   name: string;
-  range: [number, number];
+  range: number[];
   description: ResultDescription;
   key_actions: KeyAction[];
   key_actions_cta: KeyActionsCTA;
@@ -49,7 +49,7 @@ export interface UserAnswer {
 }
 
 export interface AssessmentState {
-  currentStep: 'email' | 'assessment' | 'results';
+  currentStep: "email" | "assessment" | "results";
   email: string;
   currentQuestionIndex: number;
   answers: UserAnswer[];

@@ -1,61 +1,28 @@
-import React, { useEffect } from 'react';
-import { useAssessment } from './hooks/useAssessment';
-import { EmailCollection } from './components/EmailCollection';
-import { Assessment } from './components/Assessment';
-import { Results } from './components/Results';
+import React from "react";
+import { useAssessment } from "./hooks/useAssessment";
+import { EmailCollection } from "./components/EmailCollection";
+import { Assessment } from "./components/Assessment";
+import { Results } from "./components/Results";
 
 function App() {
-  const { state, actions } = useAssessment();
-
-  // Add useEffect to track state changes
-  useEffect(() => {
-    console.log('=== APP STATE CHANGED ===');
-    console.log('Current step:', state.currentStep);
-    console.log('Full state:', state);
-  }, [state.currentStep, state.resultLevel]);
+  const { state, actions, computed } = useAssessment();
 
   const renderCurrentStep = () => {
-    console.log('=== RENDERING STEP ===', state.currentStep);
-    
     switch (state.currentStep) {
-      case 'email':
-        console.log('Rendering EmailCollection');
+      case "email":
         return <EmailCollection onEmailSubmit={actions.setEmail} />;
-      case 'assessment':
-        console.log('Rendering Assessment');
-        return <Assessment />;
-      case 'results':
-        console.log('Rendering Results');
-        return <Results />;
+      case "assessment":
+        return (
+          <Assessment state={state} actions={actions} computed={computed} />
+        );
+      case "results":
+        return <Results state={state} actions={actions} />;
       default:
-        console.log('Rendering default (EmailCollection)');
         return <EmailCollection onEmailSubmit={actions.setEmail} />;
     }
   };
 
-  return (
-    <div className="App">
-      {/* Debug panel */}
-      <div style={{ 
-        position: 'fixed', 
-        top: 0, 
-        right: 0, 
-        background: 'black', 
-        color: 'white', 
-        padding: '10px', 
-        fontSize: '12px',
-        zIndex: 9999,
-        maxWidth: '300px'
-      }}>
-        <div>Step: {state.currentStep}</div>
-        <div>Score: {state.totalScore}</div>
-        <div>Level: {state.resultLevel?.level || 'None'}</div>
-        <div>Answers: {state.answers.length}</div>
-      </div>
-      
-      {renderCurrentStep()}
-    </div>
-  );
+  return <div className="App">{renderCurrentStep()}</div>;
 }
 
 export default App;

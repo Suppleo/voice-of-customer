@@ -1,21 +1,26 @@
-import React from 'react';
-import { Share2, RotateCcw, ExternalLink, CheckCircle } from 'lucide-react';
-import { useAssessment } from '../hooks/useAssessment';
-import { GaugeChart } from './GaugeChart';
+import React, { useState } from "react";
+import { Share2, RotateCcw, ExternalLink, CheckCircle } from "lucide-react";
+import { GaugeChart } from "./GaugeChart";
+import { SharePopup } from "./SharePopup";
+import { AssessmentState } from "../types/assessment";
 
-export const Results: React.FC = () => {
-  const { state, actions } = useAssessment();
-  
-  console.log('=== RESULTS COMPONENT RENDER ===');
-  console.log('State in Results:', state);
-  console.log('Result level:', state.resultLevel);
-  
+type ResultsProps = {
+  state: AssessmentState;
+  actions: {
+    resetAssessment: () => void;
+  };
+};
+
+export const Results: React.FC<ResultsProps> = ({ state, actions }) => {
+  const [isSharePopupOpen, setIsSharePopupOpen] = useState(false);
+
   if (!state.resultLevel) {
-    console.log('No result level found, returning null');
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Đang tải kết quả...</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+            Đang tải kết quả...
+          </h1>
           <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
         </div>
       </div>
@@ -25,20 +30,7 @@ export const Results: React.FC = () => {
   const { resultLevel, totalScore } = state;
 
   const handleShare = () => {
-    const shareText = `Tôi vừa hoàn thành bài đánh giá năng lực Lắng nghe khách hàng và đạt cấp ${resultLevel.level} - ${resultLevel.name}! Hãy thử đánh giá doanh nghiệp của bạn.`;
-    const shareUrl = `${window.location.origin}?result=${resultLevel.level}`;
-    
-    if (navigator.share) {
-      navigator.share({
-        title: 'Kết quả đánh giá năng lực Lắng nghe khách hàng',
-        text: shareText,
-        url: shareUrl,
-      });
-    } else {
-      // Fallback to Facebook sharing
-      const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`;
-      window.open(facebookUrl, '_blank', 'width=600,height=400');
-    }
+    setIsSharePopupOpen(true);
   };
 
   const handleRestart = () => {
@@ -57,7 +49,8 @@ export const Results: React.FC = () => {
             Kết quả đánh giá của bạn
           </h1>
           <p className="text-xl text-gray-600">
-            Dựa trên câu trả lời của bạn, đây là mức độ trưởng thành hiện tại của doanh nghiệp
+            Dựa trên câu trả lời của bạn, đây là mức độ trưởng thành hiện tại
+            của doanh nghiệp
           </p>
         </div>
 
@@ -74,22 +67,20 @@ export const Results: React.FC = () => {
         {/* Result Details */}
         <div className="bg-white rounded-2xl shadow-xl p-8 mb-8 border border-gray-100">
           <div className="flex items-center mb-6">
-            <img 
-              src={resultLevel.icon} 
+            <img
+              src={resultLevel.icon}
               alt={resultLevel.name}
               className="w-16 h-16 mr-4"
               onError={(e) => {
                 // Fallback if image fails to load
-                e.currentTarget.style.display = 'none';
+                e.currentTarget.style.display = "none";
               }}
             />
             <div>
               <h2 className="text-3xl font-bold text-gray-900">
                 Cấp {resultLevel.level}: {resultLevel.name}
               </h2>
-              <p className="text-lg text-gray-600">
-                Điểm số: {totalScore}/10
-              </p>
+              <p className="text-lg text-gray-600">Điểm số: {totalScore}/10</p>
             </div>
           </div>
 
@@ -107,13 +98,14 @@ export const Results: React.FC = () => {
           </h3>
           <div className="space-y-4">
             {resultLevel.key_actions.map((action, index) => (
-              <div key={index} className="flex items-start space-x-4 p-4 bg-blue-50 rounded-xl">
+              <div
+                key={index}
+                className="flex items-start space-x-4 p-4 bg-blue-50 rounded-xl"
+              >
                 <div className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-semibold">
                   {index + 1}
                 </div>
-                <p className="text-gray-700 leading-relaxed">
-                  {action.text}
-                </p>
+                <p className="text-gray-700 leading-relaxed">{action.text}</p>
               </div>
             ))}
           </div>
@@ -144,7 +136,7 @@ export const Results: React.FC = () => {
             <Share2 className="w-5 h-5" />
             <span>Chia sẻ kết quả</span>
           </button>
-          
+
           <button
             onClick={handleRestart}
             className="flex items-center justify-center space-x-2 bg-gray-600 hover:bg-gray-700 text-white font-semibold px-8 py-4 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
@@ -160,10 +152,19 @@ export const Results: React.FC = () => {
             Cảm ơn bạn đã sử dụng công cụ đánh giá của Filum.ai
           </p>
           <p className="text-sm text-gray-400">
-            Kết quả này sẽ được gửi đến email: <span className="font-medium">{state.email}</span>
+            Kết quả này sẽ được gửi đến email:{" "}
+            <span className="font-medium">{state.email}</span>
           </p>
         </div>
       </div>
+
+      {/* Share Popup */}
+      <SharePopup
+        isOpen={isSharePopupOpen}
+        onClose={() => setIsSharePopupOpen(false)}
+        resultLevel={resultLevel}
+        totalScore={totalScore}
+      />
     </div>
   );
 };
