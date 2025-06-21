@@ -56,12 +56,7 @@ export const Results: React.FC<ResultsProps> = ({ state, actions }) => {
 
         {/* Score Visualization */}
         <div className="bg-white rounded-2xl shadow-xl p-8 mb-8 border border-gray-100">
-          <GaugeChart
-            score={totalScore}
-            maxScore={10}
-            level={resultLevel.level}
-            levelName={resultLevel.name}
-          />
+          <GaugeChart score={totalScore} maxScore={10} />
         </div>
 
         {/* Result Details */}

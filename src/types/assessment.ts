@@ -49,7 +49,7 @@ export interface UserAnswer {
 }
 
 export interface AssessmentState {
-  currentStep: "email" | "assessment" | "results";
+  currentStep: "email" | "instructions" | "assessment" | "results";
   email: string;
   currentQuestionIndex: number;
   answers: UserAnswer[];

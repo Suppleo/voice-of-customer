@@ -1,9 +1,5 @@
 import { useState, useCallback } from "react";
-import {
-  AssessmentState,
-  UserAnswer,
-  AssessmentResult,
-} from "../types/assessment";
+import { AssessmentState, UserAnswer } from "../types/assessment";
 import assessmentData from "../data/assessment.json";
 
 const initialState: AssessmentState = {
@@ -22,6 +18,13 @@ export const useAssessment = () => {
     setState((prev) => ({
       ...prev,
       email,
+      currentStep: "instructions",
+    }));
+  }, []);
+
+  const startAssessment = useCallback(() => {
+    setState((prev) => ({
+      ...prev,
       currentStep: "assessment",
     }));
   }, []);
@@ -135,6 +138,7 @@ export const useAssessment = () => {
     state,
     actions: {
       setEmail,
+      startAssessment,
       answerQuestion,
       nextQuestion,
       previousQuestion,

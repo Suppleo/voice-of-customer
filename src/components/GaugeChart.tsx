@@ -1,122 +1,69 @@
-import React, { useEffect, useState } from 'react';
+import React from "react";
+import GaugeChartComponent from "react-gauge-chart";
 
-interface GaugeChartProps {
+interface CustomGaugeChartProps {
   score: number;
   maxScore: number;
-  level: number;
-  levelName: string;
 }
 
-export const GaugeChart: React.FC<GaugeChartProps> = ({ 
-  score, 
-  maxScore, 
-  level, 
-  levelName 
+const CustomGaugeChart: React.FC<CustomGaugeChartProps> = ({
+  score,
+  maxScore = 10,
 }) => {
-  const [animatedScore, setAnimatedScore] = useState(0);
-  
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setAnimatedScore(score);
-    }, 500);
-    
-    return () => clearTimeout(timer);
-  }, [score]);
+  const sections = [
+    "Ad hoc",
+    "Establishing",
+    "Performing",
+    "Optimizing",
+    "Embedded",
+  ];
 
-  const percentage = (animatedScore / maxScore) * 100;
-  const circumference = 2 * Math.PI * 90; // radius = 90
-  const strokeDasharray = circumference;
-  const strokeDashoffset = circumference - (percentage / 100) * circumference;
-
-  // Level colors
-  const getLevelColor = (level: number) => {
-    const colors = {
-      1: '#ef4444', // red-500
-      2: '#f97316', // orange-500
-      3: '#eab308', // yellow-500
-      4: '#22c55e', // green-500
-      5: '#3b82f6', // blue-500
-    };
-    return colors[level as keyof typeof colors] || '#6b7280';
+  // Determine which section the score falls into
+  const getSectionIndex = (score: number) => {
+    if (score <= 2) return 0;
+    if (score <= 4) return 1;
+    if (score <= 6) return 2;
+    if (score <= 8) return 3;
+    return 4;
   };
 
-  const levelColor = getLevelColor(level);
+  const currentSectionIndex = getSectionIndex(score);
 
   return (
-    <div className="relative w-64 h-64 mx-auto">
-      {/* Background circle */}
-      <svg className="w-full h-full transform -rotate-90" viewBox="0 0 200 200">
-        <circle
-          cx="100"
-          cy="100"
-          r="90"
-          stroke="#e5e7eb"
-          strokeWidth="12"
-          fill="transparent"
-          className="opacity-20"
-        />
-        
-        {/* Progress circle */}
-        <circle
-          cx="100"
-          cy="100"
-          r="90"
-          stroke={levelColor}
-          strokeWidth="12"
-          fill="transparent"
-          strokeDasharray={strokeDasharray}
-          strokeDashoffset={strokeDashoffset}
-          strokeLinecap="round"
-          className="transition-all duration-2000 ease-out"
-          style={{
-            filter: 'drop-shadow(0 0 8px rgba(59, 130, 246, 0.3))'
-          }}
-        />
-      </svg>
-
-      {/* Center content */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <div className="text-center">
-          <div className="text-4xl font-bold text-gray-900 mb-1">
-            {animatedScore.toFixed(1)}
-          </div>
-          <div className="text-sm text-gray-500 mb-2">
-            trên {maxScore} điểm
-          </div>
-          <div 
-            className="text-lg font-semibold px-3 py-1 rounded-full text-white"
-            style={{ backgroundColor: levelColor }}
-          >
-            Cấp {level}
-          </div>
-          <div className="text-sm text-gray-600 mt-1">
-            {levelName}
-          </div>
+    <div className="w-full max-w-sm mx-auto">
+      <GaugeChartComponent
+        nrOfLevels={5}
+        arcsLength={[0.2, 0.2, 0.2, 0.2, 0.2]}
+        colors={["#FF5F6D", "#FFC371", "#facc15", "#4CAF50", "#0F9D58"]}
+        percent={score / maxScore}
+        arcPadding={0.02}
+        needleColor="#333"
+        needleBaseColor="#333"
+        textColor="#333"
+        hideText={true} // Hiding default text to use custom
+      />
+      <div className="text-center -mt-2">
+        <div className="text-4xl font-bold text-gray-800">
+          {score.toFixed(1)}
         </div>
+        <div className="text-sm text-gray-500">Score</div>
       </div>
 
-      {/* Level indicators */}
-      <div className="absolute inset-0">
-        {[1, 2, 3, 4, 5].map((levelNum) => {
-          const angle = (levelNum - 1) * 72 - 90; // 360/5 = 72 degrees per level
-          const x = 100 + 110 * Math.cos((angle * Math.PI) / 180);
-          const y = 100 + 110 * Math.sin((angle * Math.PI) / 180);
-          
-          return (
-            <div
-              key={levelNum}
-              className={`absolute w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold transform -translate-x-1/2 -translate-y-1/2 ${
-                levelNum <= level 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-gray-200 text-gray-500'
-              }`}
-              style={{ left: x, top: y }}
-            >
-              {levelNum}
-            </div>
-          );
-        })}
+      {/* Custom Labels */}
+      <div className="flex justify-between text-xs text-gray-500 mt-2 px-2">
+        {sections.map((section, index) => (
+          <span
+            key={section}
+            className={`font-medium ${
+              index === currentSectionIndex ? "text-blue-600" : ""
+            }`}
+          >
+            {section}
+          </span>
+        ))}
       </div>
     </div>
   );
 };
+
+export { CustomGaugeChart as GaugeChart };

@@ -1,6 +1,6 @@
-import React from 'react';
-import { AssessmentQuestion, UserAnswer } from '../types/assessment';
-import { CheckCircle } from 'lucide-react';
+import React from "react";
+import { AssessmentQuestion, UserAnswer } from "../types/assessment";
+import { CheckCircle } from "lucide-react";
 
 interface QuestionCardProps {
   question: AssessmentQuestion;
@@ -8,10 +8,10 @@ interface QuestionCardProps {
   selectedAnswer?: UserAnswer;
 }
 
-export const QuestionCard: React.FC<QuestionCardProps> = ({ 
-  question, 
-  onAnswer, 
-  selectedAnswer 
+export const QuestionCard: React.FC<QuestionCardProps> = ({
+  question,
+  onAnswer,
+  selectedAnswer,
 }) => {
   return (
     <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
@@ -24,21 +24,23 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
       <div className="space-y-4">
         {question.options.map((option) => {
           const isSelected = selectedAnswer?.optionId === option.id;
-          
+
           return (
             <button
               key={option.id}
               onClick={() => onAnswer(question.id, option.id, option.score)}
-              className={`w-full p-6 rounded-xl border-2 text-left transition-all duration-200 hover:shadow-md transform hover:-translate-y-0.5 ${
+              className={`w-full p-4 rounded-xl border-2 text-left transition-all duration-200 hover:shadow-md transform hover:-translate-y-0.5 ${
                 isSelected
-                  ? 'border-blue-500 bg-blue-50 shadow-md'
-                  : 'border-gray-200 bg-white hover:border-gray-300'
+                  ? "border-blue-500 bg-blue-50 shadow-md"
+                  : "border-gray-200 bg-white hover:border-gray-300"
               }`}
             >
               <div className="flex items-center justify-between">
-                <span className={`text-lg font-medium ${
-                  isSelected ? 'text-blue-900' : 'text-gray-700'
-                }`}>
+                <span
+                  className={`text-lg font-medium ${
+                    isSelected ? "text-blue-900" : "text-gray-700"
+                  }`}
+                >
                   {option.text}
                 </span>
                 {isSelected && (

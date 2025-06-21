@@ -42,13 +42,13 @@ export const EmailCollection: React.FC<EmailCollectionProps> = ({
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center p-4">
-      <div className="max-w-2xl w-full">
+      <div className="max-w-4xl w-full">
         <div className="text-center mb-12">
           <div className="inline-flex items-center justify-center w-20 h-20 bg-blue-600 rounded-full mb-6">
             <Mail className="w-10 h-10 text-white" />
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-            Đánh giá mức độ trưởng thành về
+            <span>Đánh giá mức độ trưởng thành về</span>
             <span className="text-blue-600 block">
               quản trị trải nghiệm khách hàng
             </span>
@@ -60,7 +60,7 @@ export const EmailCollection: React.FC<EmailCollectionProps> = ({
           </p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 border border-gray-100">
+        <div className="bg-white rounded-2xl shadow-xl m-8 md:m-8 p-8 md:p-12 border border-gray-100">
           <div className="text-center mb-8">
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">
               Bắt đầu đánh giá của bạn
