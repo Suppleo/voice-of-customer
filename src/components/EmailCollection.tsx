@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import { Mail, ArrowRight } from 'lucide-react';
+import React, { useState } from "react";
+import { Mail, ArrowRight } from "lucide-react";
 
 interface EmailCollectionProps {
   onEmailSubmit: (email: string) => void;
 }
 
-export const EmailCollection: React.FC<EmailCollectionProps> = ({ onEmailSubmit }) => {
-  const [email, setEmail] = useState('');
-  const [error, setError] = useState('');
+export const EmailCollection: React.FC<EmailCollectionProps> = ({
+  onEmailSubmit,
+}) => {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const validateEmail = (email: string): boolean => {
@@ -17,20 +19,20 @@ export const EmailCollection: React.FC<EmailCollectionProps> = ({ onEmailSubmit 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     if (!email.trim()) {
-      setError('Vui lòng nhập địa chỉ email của bạn');
+      setError("Vui lòng nhập địa chỉ email của bạn");
       return;
     }
 
     if (!validateEmail(email)) {
-      setError('Vui lòng nhập địa chỉ email hợp lệ');
+      setError("Vui lòng nhập địa chỉ email hợp lệ");
       return;
     }
 
     setIsLoading(true);
-    
+
     // Simulate API call
     setTimeout(() => {
       setIsLoading(false);
@@ -47,11 +49,14 @@ export const EmailCollection: React.FC<EmailCollectionProps> = ({ onEmailSubmit 
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
             Đánh giá mức độ trưởng thành về
-            <span className="text-blue-600 block">quản trị trải nghiệm khách hàng</span>
+            <span className="text-blue-600 block">
+              quản trị trải nghiệm khách hàng
+            </span>
           </h1>
           <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-            Khám phá năng lực Lắng nghe khách hàng (Voice of Customer) của doanh nghiệp bạn 
-            thông qua bài đánh giá chuyên sâu. Nhận kết quả chi tiết và lộ trình cải thiện cụ thể.
+            Khám phá năng lực Lắng nghe khách hàng (Voice of Customer) của doanh
+            nghiệp bạn thông qua bài đánh giá chuyên sâu. Nhận kết quả chi tiết
+            và lộ trình cải thiện cụ thể.
           </p>
         </div>
 
@@ -67,7 +72,10 @@ export const EmailCollection: React.FC<EmailCollectionProps> = ({ onEmailSubmit 
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
                 Địa chỉ email của bạn
               </label>
               <input
@@ -76,16 +84,18 @@ export const EmailCollection: React.FC<EmailCollectionProps> = ({ onEmailSubmit 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className={`w-full px-4 py-4 border-2 rounded-xl text-lg transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-blue-100 ${
-                  error 
-                    ? 'border-red-300 focus:border-red-500' 
-                    : 'border-gray-200 focus:border-blue-500'
+                  error
+                    ? "border-red-300 focus:border-red-500"
+                    : "border-gray-200 focus:border-blue-500"
                 }`}
                 placeholder="your.email@company.com"
                 disabled={isLoading}
               />
               {error && (
                 <p className="mt-2 text-sm text-red-600 flex items-center">
-                  <span className="w-4 h-4 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-xs mr-2">!</span>
+                  <span className="w-4 h-4 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-xs mr-2">
+                    !
+                  </span>
                   {error}
                 </p>
               )}
@@ -109,14 +119,16 @@ export const EmailCollection: React.FC<EmailCollectionProps> = ({ onEmailSubmit 
 
           <div className="mt-8 pt-6 border-t border-gray-100">
             <p className="text-sm text-gray-500 text-center">
-              Bằng cách tiếp tục, bạn đồng ý nhận thông tin về sản phẩm và dịch vụ từ Filum.ai
+              Bằng cách tiếp tục, bạn đồng ý nhận thông tin về sản phẩm và dịch
+              vụ từ chúng tôi
             </p>
           </div>
         </div>
 
         <div className="text-center mt-8">
           <p className="text-gray-500">
-            Được phát triển bởi <span className="font-semibold text-blue-600">Filum.ai</span>
+            Được phát triển bởi{" "}
+            <span className="font-semibold text-blue-600">Suppleo</span>
           </p>
         </div>
       </div>

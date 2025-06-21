@@ -149,7 +149,7 @@ export const Results: React.FC<ResultsProps> = ({ state, actions }) => {
         {/* Footer */}
         <div className="text-center mt-12 pt-8 border-t border-gray-200">
           <p className="text-gray-500 mb-4">
-            Cảm ơn bạn đã sử dụng công cụ đánh giá của Filum.ai
+            Cảm ơn bạn đã sử dụng công cụ đánh giá của chúng tôi
           </p>
           <p className="text-sm text-gray-400">
             Kết quả này sẽ được gửi đến email:{" "}

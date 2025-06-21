@@ -24,7 +24,8 @@ export const handler = async function (event, context) {
   };
 
   const levelName = levelNames[level] || "Không xác định";
-  const baseUrl = process.env.URL || "https://assessment.filum.ai";
+  const baseUrl =
+    process.env.URL || "https://zesty-speculoos-8faf7e.netlify.app";
   const imageUrl = `${baseUrl}/images/lv${level}.jpg`;
   const shareUrl = `${baseUrl}/share-result/${resultId}`;
 
@@ -49,6 +50,7 @@ export const handler = async function (event, context) {
     <meta property="og:image:height" content="630" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:locale" content="vi_VN" />
+    <meta property="og:site_name" content="Filum.ai Assessment" />
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
@@ -56,9 +58,6 @@ export const handler = async function (event, context) {
     <meta property="twitter:title" content="${title}" />
     <meta property="twitter:description" content="${description}" />
     <meta property="twitter:image" content="${imageUrl}" />
-    
-    <!-- Redirect to main app after a short delay -->
-    <meta http-equiv="refresh" content="3;url=${baseUrl}?result=${level}">
     
     <style>
         body {
@@ -101,10 +100,27 @@ export const handler = async function (event, context) {
             color: #90EE90;
             margin-bottom: 20px;
         }
-        .redirect {
-            font-size: 1rem;
-            opacity: 0.8;
-            margin-top: 40px;
+        .redirect-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+        .redirect-btn:hover {
+            background: #45a049;
+        }
+        .debug-info {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            text-align: left;
         }
     </style>
 </head>
@@ -114,8 +130,18 @@ export const handler = async function (event, context) {
         <div class="level">Cấp ${level}: ${levelName}</div>
         <div class="score">${score}/10 điểm</div>
         <p>${description}</p>
-        <div class="redirect">
-            Đang chuyển hướng về trang chính...
+        
+        <button class="redirect-btn" onclick="window.location.href='${baseUrl}?result=${level}'">
+            Xem chi tiết kết quả
+        </button>
+        
+        <div class="debug-info">
+            <strong>Debug Info:</strong><br>
+            Share URL: ${shareUrl}<br>
+            Image URL: ${imageUrl}<br>
+            Level: ${level}<br>
+            Score: ${score}<br>
+            Result ID: ${resultId}
         </div>
     </div>
 </body>
@@ -124,7 +150,7 @@ export const handler = async function (event, context) {
   return {
     statusCode: 200,
     headers: {
-      "Content-Type": "text/html",
+      "Content-Type": "text/html; charset=utf-8",
       "Cache-Control": "public, max-age=3600", // Cache for 1 hour
     },
     body: html,
