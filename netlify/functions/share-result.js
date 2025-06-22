@@ -142,7 +142,7 @@ export const handler = async function (event, context) {
         <p>${description}</p>
         
         <button class="redirect-btn" onclick="window.location.href='${baseUrl}?result=${level}'">
-            Làm lại đánh giá
+            Đánh giá ngay!
         </button>
     </div>
 </body>
