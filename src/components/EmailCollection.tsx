@@ -53,14 +53,14 @@ export const EmailCollection: React.FC<EmailCollectionProps> = ({
               quản trị trải nghiệm khách hàng
             </span>
           </h1>
-          <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+          <p className="text-xl text-gray-600 mb-4 leading-relaxed">
             Khám phá năng lực Lắng nghe khách hàng (Voice of Customer) của doanh
             nghiệp bạn thông qua bài đánh giá chuyên sâu. Nhận kết quả chi tiết
             và lộ trình cải thiện cụ thể.
           </p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-xl m-8 md:m-8 p-8 md:p-12 border border-gray-100">
+        <div className="bg-white rounded-2xl shadow-xl m-4 md:m-4 p-4 md:p-8 border border-gray-100">
           <div className="text-center mb-8">
             <h2 className="text-2xl font-semibold text-gray-900 mb-3">
               Bắt đầu đánh giá của bạn

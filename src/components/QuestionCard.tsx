@@ -14,7 +14,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   selectedAnswer,
 }) => {
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+    <div className="bg-white rounded-2xl shadow-lg p-7 border border-gray-100">
       <div className="mb-8">
         <h2 className="text-xl font-semibold text-gray-900 leading-relaxed">
           {question.title}

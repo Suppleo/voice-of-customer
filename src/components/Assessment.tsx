@@ -90,7 +90,7 @@ export const Assessment: React.FC<AssessmentProps> = ({
         </div>
 
         {/* Question Overview */}
-        <div className="mt-12 bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+        <div className="mt-6 bg-white rounded-xl p-6 shadow-sm border border-gray-100">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
             Tổng quan câu hỏi
           </h3>
