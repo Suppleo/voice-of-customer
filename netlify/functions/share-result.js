@@ -80,7 +80,7 @@ export const handler = async function (event, context) {
             backdrop-filter: blur(10px);
         }
         .result-image {
-            width: 200px;
+            width: 400px;
             height: 200px;
             object-fit: cover;
             border-radius: 15px;
