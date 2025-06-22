@@ -20,10 +20,10 @@ const CustomGaugeChart: React.FC<CustomGaugeChartProps> = ({
 
   // Determine which section the score falls into
   const getSectionIndex = (score: number) => {
-    if (score <= 2) return 0;
-    if (score <= 4) return 1;
-    if (score <= 6) return 2;
-    if (score <= 8) return 3;
+    if (score < 2) return 0;
+    if (score < 4) return 1;
+    if (score < 6) return 2;
+    if (score < 8) return 3;
     return 4;
   };
 

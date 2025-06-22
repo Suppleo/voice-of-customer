@@ -79,6 +79,15 @@ export const handler = async function (event, context) {
             border-radius: 20px;
             backdrop-filter: blur(10px);
         }
+        .result-image {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin: 0 auto 20px;
+            display: block;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
         h1 {
             font-size: 2.5rem;
             margin-bottom: 20px;
@@ -126,23 +135,15 @@ export const handler = async function (event, context) {
 </head>
 <body>
     <div class="container">
+        <img src="${imageUrl}" alt="Cấp ${level} - ${levelName}" class="result-image" />
         <h1>🎉 Kết quả đánh giá</h1>
         <div class="level">Cấp ${level}: ${levelName}</div>
         <div class="score">${score}/10 điểm</div>
         <p>${description}</p>
         
         <button class="redirect-btn" onclick="window.location.href='${baseUrl}?result=${level}'">
-            Xem chi tiết kết quả
+            Làm lại đánh giá
         </button>
-        
-        <div class="debug-info">
-            <strong>Debug Info:</strong><br>
-            Share URL: ${shareUrl}<br>
-            Image URL: ${imageUrl}<br>
-            Level: ${level}<br>
-            Score: ${score}<br>
-            Result ID: ${resultId}
-        </div>
     </div>
 </body>
 </html>`;

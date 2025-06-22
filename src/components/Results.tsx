@@ -146,10 +146,6 @@ export const Results: React.FC<ResultsProps> = ({ state, actions }) => {
           <p className="text-gray-500 mb-4">
             Cảm ơn bạn đã sử dụng công cụ đánh giá của chúng tôi
           </p>
-          <p className="text-sm text-gray-400">
-            Kết quả này sẽ được gửi đến email:{" "}
-            <span className="font-medium">{state.email}</span>
-          </p>
         </div>
       </div>
 
